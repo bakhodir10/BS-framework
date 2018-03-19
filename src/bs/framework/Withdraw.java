@@ -1,9 +1,9 @@
 package bs.framework;
 
-public class Withdraw implements Strategy {
+public class Withdraw implements TransactionType {
 
     @Override
-    public void execute(Transaction transaction) {
+    public void transact(Transaction transaction) {
         //todo create Transaction and call the transfer method
     }
 }

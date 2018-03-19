@@ -1,10 +1,10 @@
 package bs.framework;
 
-public class Deposit implements Strategy {
+public class Deposit implements TransactionType {
 
     @Override
-    public void execute(Transaction transaction) {
-        
-        // todo create new transaction and call the transfer method
+    public void transact(Transaction transaction) {
+
+        // todo create new transact and call the transfer method
     }
 }

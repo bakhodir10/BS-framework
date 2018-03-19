@@ -12,14 +12,14 @@ public class Account implements IAccount {
 
     @Override
     public void deposit(Transaction transaction) {
-        manager.setStrategy(new Deposit());
-        manager.getStrategy().execute(transaction);
+        manager.setTransactionType(new Deposit());
+        manager.getTransactionType().transact(transaction);
     }
 
     @Override
     public void withdraw(Transaction transaction) {
-        manager.setStrategy(new Withdraw());
-        manager.getStrategy().execute(transaction);
+        manager.setTransactionType(new Withdraw());
+        manager.getTransactionType().transact(transaction);
     }
 
     @Override
