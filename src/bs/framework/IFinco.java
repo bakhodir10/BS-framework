@@ -4,11 +4,11 @@ public interface IFinco {
 
     void addInterest(double amount);
 
-    void createCustomer(Customer customer);
+    void createCustomer(ICustomer customer);
 
-    void deposit(Customer customer, double amount);
+    void deposit(ICustomer customer, double amount);
 
-    void withdraw(Customer customer, double amount);
+    void withdraw(ICustomer customer, double amount);
 
-    void accountReport(Customer customer);
+    void accountReport(ICustomer customer);
 }

@@ -1,9 +1,10 @@
 package bs.framework;
 
-public class Deposit implements ICommand {
+public class Deposit implements Strategy {
 
     @Override
-    public void execute(ICustomer customer, IAccount account, double amount) {
+    public void execute(Transaction transaction) {
+        
         // todo create new transaction and call the transfer method
     }
 }

@@ -1,26 +1,25 @@
 package bs.framework;
 
-
 public class Account implements IAccount {
     private int accNum;
     private double balance;
-    private IManager manager;
-    private ICustomer customer;
+    private TransactionManager manager;
 
-    public Account(int accNum, IManager manager, ICustomer customer) {
+    public Account(int accNum) {
         this.accNum = accNum;
-        this.manager = manager;
-        this.customer = customer;
+        this.manager = new TransactionManager(null);
     }
 
     @Override
-    public void deposit(ICustomer customer, double amount) {
-        this.manager.submit(customer, this, amount);
+    public void deposit(Transaction transaction) {
+        manager.setStrategy(new Deposit());
+        manager.getStrategy().execute(transaction);
     }
 
     @Override
-    public void withdraw(ICustomer customer, double amount) {
-        this.manager.submit(customer, this, amount);
+    public void withdraw(Transaction transaction) {
+        manager.setStrategy(new Withdraw());
+        manager.getStrategy().execute(transaction);
     }
 
     @Override

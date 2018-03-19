@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Finco implements IFinco {
     private String name;
-    private List<Customer> customerList;
+    private List<ICustomer> customerList;
 
     @Override
     public void addInterest(double amount) {
@@ -12,21 +12,21 @@ public class Finco implements IFinco {
     }
 
     @Override
-    public void createCustomer(Customer customer) {
+    public void createCustomer(ICustomer customer) {
+        this.customerList.add(customer);
+    }
+
+    @Override
+    public void deposit(ICustomer customer, double amount) {
+    }
+
+    @Override
+    public void withdraw(ICustomer customer, double amount) {
 
     }
 
     @Override
-    public void deposit(Customer customer, double amount) {
-    }
-
-    @Override
-    public void withdraw(Customer customer, double amount) {
-
-    }
-
-    @Override
-    public void accountReport(Customer customer) {
+    public void accountReport(ICustomer customer) {
 
     }
 }

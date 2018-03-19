@@ -1,10 +1,5 @@
 package bs.framework;
 
-public class Checkings implements IAccountType {
+public class Checkings extends Customer {
     private double interestRate;
-
-    @Override
-    public void addInterest(double money) {
-
-    }
 }

@@ -1,9 +1,17 @@
 package bs.framework;
 
-public class Transaction implements ITransaction {
+import java.util.Date;
 
-    @Override
-    public void transfer(double amount) {
+public class Transaction {
+    private double amount;
+    private Date date;
+    private IAccount from;
+    private IAccount to;
 
+    public Transaction(double amount, Date date, IAccount from, IAccount to) {
+        this.amount = amount;
+        this.date = date;
+        this.from = from;
+        this.to = to;
     }
 }

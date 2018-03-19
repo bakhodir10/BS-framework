@@ -18,12 +18,12 @@ public class Customer implements ICustomer {
 
     @Override
     public void addAccount(IAccount account) {
-
+        this.accountList.add(account);
     }
 
     @Override
     public void removeAccount(IAccount account) {
-
+        this.accountList.remove(account);
     }
 
     @Override
