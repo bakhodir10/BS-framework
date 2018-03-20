@@ -4,6 +4,7 @@ public class Account implements IAccount {
     private int accNum;
     private double balance;
     private TransactionManager manager;
+    private ICustomer customer; // Tania
 
     public Account(int accNum) {
         this.accNum = accNum;
@@ -37,4 +38,14 @@ public class Account implements IAccount {
     public TransactionManager getManager() {
         return manager;
     }
+    
+    // Tania
+    public ICustomer getCustomer(){
+    	return customer;
+    }
+    
+    public void setCustomer(ICustomer customer){
+    	this.customer = customer;
+    }
+    //
 }
