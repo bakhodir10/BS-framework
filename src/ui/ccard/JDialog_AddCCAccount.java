@@ -1,11 +1,7 @@
 /*
 		A basic implementation of the JDialog class.
 */
-package ccard;
-import java.awt.*;
-import javax.swing.*;
-
-import bank.BankFrm;
+package ui.ccard;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog
 {

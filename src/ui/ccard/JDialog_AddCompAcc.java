@@ -1,9 +1,6 @@
-package ccard;
-import java.awt.*;
-import javax.swing.*;
+package ui.ccard;
 
-import bank.BankFrm;
-
+import ui.bank.BankFrm;
 
 
 public class JDialog_AddCompAcc extends javax.swing.JDialog
