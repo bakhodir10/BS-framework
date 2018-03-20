@@ -25,20 +25,12 @@ public class Account implements IAccount {
 
     @Override
     public void addInterest(double amount) {
+
     }
 
     public int getAccNum() {
         return accNum;
     }
-<<<<<<< HEAD
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public TransactionManager getManager() {
-        return manager;
-=======
 
     public double getBalance() {
         return balance;
@@ -47,15 +39,13 @@ public class Account implements IAccount {
     public TransactionManager getManager() {
         return manager;
     }
-    
+
     // Tania
-    public ICustomer getCustomer(){
-    	return customer;
+    public ICustomer getCustomer() {
+        return customer;
     }
-    
-    public void setCustomer(ICustomer customer){
-    	this.customer = customer;
->>>>>>> 34560332880d41ef3ac99358ddae1585374df4b9
+
+    public void setCustomer(ICustomer customer) {
+        this.customer = customer;
     }
-    //
 }
