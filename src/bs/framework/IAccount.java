@@ -6,6 +6,10 @@ public interface IAccount {
     void withdraw(IAccount account, double amount);
 
     void addInterest(double amount);
-    
+
     void setCustomer(ICustomer customer); // Tania
+
+    void setBalance(double balance);
+
+    double getBalance();
 }

@@ -48,4 +48,8 @@ public class Account implements IAccount {
     public void setCustomer(ICustomer customer) {
         this.customer = customer;
     }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

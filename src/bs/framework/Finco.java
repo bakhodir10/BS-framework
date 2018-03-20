@@ -31,6 +31,7 @@ public class Finco implements IFinco {
 
     @Override
     public void withdraw(IAccount account, double amount) {
+        account.withdraw(account, amount);
     }
 
     @Override

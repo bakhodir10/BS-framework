@@ -4,6 +4,6 @@ public class Withdraw implements TransactionStrategy {
 
     @Override
     public void transact(IAccount account, double amount) {
-
+        account.setBalance(account.getBalance() - amount);
     }
 }
