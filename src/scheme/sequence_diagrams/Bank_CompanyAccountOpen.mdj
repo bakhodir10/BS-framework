@@ -226,7 +226,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -428,7 +428,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -630,7 +630,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -832,7 +832,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -1034,7 +1034,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -1236,7 +1236,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -4328,7 +4328,7 @@
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "(from Interaction1)",
+													"text": "(payer Interaction1)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false

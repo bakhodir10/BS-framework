@@ -1,17 +1,17 @@
 package bs.framework;
 
 public class TransactionManager {
-    private TransactionType transactionType;
+    private TransactionStrategy transactionStrategy;
 
-    public TransactionManager(TransactionType transactionType) {
-        this.transactionType = transactionType;
+    public TransactionManager(TransactionStrategy transactionStrategy) {
+        this.transactionStrategy = transactionStrategy;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+    public void setTransactionStrategy(TransactionStrategy transactionStrategy) {
+        this.transactionStrategy = transactionStrategy;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
+    public TransactionStrategy getTransactionStrategy() {
+        return transactionStrategy;
     }
 }

@@ -30,4 +30,20 @@ public class Customer implements ICustomer {
     public void sendEmailCustomer() {
 
     }
+
+    @Override
+    public List<IAccount> getAccount() {
+        return this.accountList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Customer)) return false;
+        Customer c = (Customer) obj;
+        return this.email.equals(c.getEmail());
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

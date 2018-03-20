@@ -4,14 +4,23 @@ import java.util.Date;
 
 public class Transaction {
     private double amount;
-    private Date date;
-    private IAccount from;
-    private IAccount to;
+    private Date date = new Date();
+    private IAccount account;
 
-    public Transaction(double amount, Date date, IAccount from, IAccount to) {
+    public Transaction(double amount, IAccount account) {
         this.amount = amount;
-        this.date = date;
-        this.from = from;
-        this.to = to;
+        this.account = account;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public IAccount getAccount() {
+        return account;
     }
 }
