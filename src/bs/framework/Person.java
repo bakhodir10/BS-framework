@@ -3,5 +3,23 @@ package bs.framework;
 import java.util.Date;
 
 public class Person extends Customer {
-    private Date bDate;
+	private Date bDate;
+
+	public Person() {
+		super();
+	}
+
+	public Person(String name, String street, String city, String state, String zip, String email, Date bDate) {
+		super(name, street, city, state, zip, email);
+		this.bDate = bDate;
+	}
+	
+	public Date getbDate() {
+		return bDate;
+	}
+
+	public void setbDate(Date bDate) {
+		this.bDate = bDate;
+	}
+
 }
