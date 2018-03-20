@@ -1,9 +1,9 @@
 package bs.framework;
 
 public interface IAccount {
-    void deposit(Transaction transaction);
+    void deposit(IAccount account, double amount);
 
-    void withdraw(Transaction transaction);
+    void withdraw(IAccount account, double amount);
 
     void addInterest(double amount);
 }

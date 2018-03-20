@@ -1,6 +1,6 @@
 package bs.framework;
 
-public class Withdraw implements TransactionType {
+public class Withdraw implements TransactionStrategy {
 
     @Override
     public void transact(Transaction transaction) {
