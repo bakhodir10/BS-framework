@@ -36,6 +36,11 @@ public class Account implements IAccount {
         return balance;
     }
 
+    @Override
+    public String getEmail() {
+        return this.customer.getEmail();
+    }
+
     public TransactionManager getManager() {
         return manager;
     }
@@ -52,4 +57,6 @@ public class Account implements IAccount {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+
 }

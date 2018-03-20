@@ -12,4 +12,6 @@ public interface IAccount {
     void setBalance(double balance);
 
     double getBalance();
+
+    String getEmail();
 }

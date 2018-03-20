@@ -10,4 +10,6 @@ public interface ICustomer {
     void sendEmailCustomer();
 
     List<IAccount> getAccount();
+
+    String getEmail();
 }
