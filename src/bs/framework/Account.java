@@ -13,13 +13,15 @@ public class Account implements IAccount {
 
     @Override
     public void deposit(IAccount account, double amount) {
-        manager.setTransactionStrategy(new Deposit());
+        manager.setTransactionStrategy(
+                new ProxyTransaction(new Deposit(), new Logging(account, amount), new Message()));
         manager.getTransactionStrategy().transact(account, amount);
     }
 
     @Override
     public void withdraw(IAccount account, double amount) {
-        manager.setTransactionStrategy(new Withdraw());
+        manager.setTransactionStrategy(
+                new ProxyTransaction(new Withdraw(), new Logging(account, amount), new Message()));
         manager.getTransactionStrategy().transact(account, amount);
     }
 
