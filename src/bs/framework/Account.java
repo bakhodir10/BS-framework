@@ -26,8 +26,7 @@ public class Account implements IAccount {
     }
 
     @Override
-    public void addInterest(double amount) {
-
+    public void addInterest() {
     }
 
     public int getAccNum() {
@@ -36,11 +35,6 @@ public class Account implements IAccount {
 
     public double getBalance() {
         return balance;
-    }
-
-    @Override
-    public String getEmail() {
-        return this.customer.getEmail();
     }
 
     public TransactionManager getManager() {

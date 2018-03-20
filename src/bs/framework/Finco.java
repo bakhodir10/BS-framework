@@ -15,7 +15,7 @@ public class Finco implements IFinco {
 
     @Override
     public void addInterest(double amount) {
-
+        this.accountList.forEach(e -> e.addInterest());
     }
 
     @Override

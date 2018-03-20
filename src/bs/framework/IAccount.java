@@ -5,7 +5,7 @@ public interface IAccount {
 
     void withdraw(IAccount account, double amount);
 
-    void addInterest(double amount);
+    void addInterest();
 
     void setCustomer(ICustomer customer); // Tania
 
@@ -13,5 +13,5 @@ public interface IAccount {
 
     double getBalance();
 
-    String getEmail();
+    ICustomer getCustomer();
 }

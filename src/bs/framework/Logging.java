@@ -1,21 +1,20 @@
 package bs.framework;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Date;
 
 public class Logging implements ILogging {
     private IAccount account;
     private double amount;
-    private List<ILogging> loggings;
+    private Date date;
 
     public Logging(IAccount account, double amount) {
         this.account = account;
         this.amount = amount;
-        this.loggings = new LinkedList<>();
+        this.date = new Date();
     }
 
     @Override
     public void log(IAccount account, double amount) {
-        this.loggings.add(new Logging(account, amount));
+        History.getInstance().save(new Logging(account, amount));
     }
 }
