@@ -3,18 +3,17 @@ package bs.framework;
 import bs.framework_ui.Forum;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Finco implements IFinco {
     private String name;
     private List<ICustomer> customerList;
-    private List<IAccount> accountList;
+	private List<IAccount> accountList;
 
     public Finco(String name) {
         this.name = name;
-        this.customerList = new LinkedList<>();
-        this.accountList = new LinkedList<>();
+        this.customerList = new ArrayList<>();
+        this.accountList = new ArrayList<>();
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Finco implements IFinco {
     }
 
     @Override
-    public String accountReport() {
+    public String report() {
         String report = "Sample report\n";
         for (IAccount acc : accountList)
             report += acc.getBalance() + "\n";
@@ -62,4 +61,12 @@ public class Finco implements IFinco {
     public String getName() {
         return name;
     }
+    public List<ICustomer> getCustomerList() {
+		return customerList;
+	}
+
+	public List<IAccount> getAccountList() {
+		return accountList;
+	}
+
 }

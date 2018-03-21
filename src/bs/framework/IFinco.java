@@ -10,5 +10,5 @@ public interface IFinco {
 
     void withdraw(IAccount account, double amount);
 
-    String accountReport();
+    String report();
 }

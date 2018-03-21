@@ -127,7 +127,7 @@ public class Forum extends javax.swing.JFrame
         for(String s : rows)
         		model.addColumn(s);
         
-        rowdata = new Object[8];
+        rowdata = new Object[100];
         JPanel1.add(JScrollPane1);
         JScrollPane1.setBounds(12,92,444,160);
         JScrollPane1.getViewport().add(JTable1);
