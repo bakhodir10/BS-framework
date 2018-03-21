@@ -3,12 +3,14 @@ package bs.framework;
 import bs.framework_ui.Forum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Finco implements IFinco {
     private String name;
     private List<ICustomer> customerList;
-	private List<IAccount> accountList;
+    private List<IAccount> accountList;
 
     public Finco(String name) {
         this.name = name;
@@ -18,7 +20,7 @@ public class Finco implements IFinco {
 
     @Override
     public void addInterest() {
-        this.accountList.forEach(e -> e.addInterest());
+        this.accountList.forEach(IAccount::addInterest);
     }
 
     @Override
@@ -40,14 +42,10 @@ public class Finco implements IFinco {
 
     @Override
     public String report() {
-        String report = "Sample report\n";
-        for (IAccount acc : accountList)
-            report += acc.getBalance() + "\n";
-        return report;
+        return History.getInstance().getReport(this.customerList);
     }
 
-
-    static List<String> s = new ArrayList<String>();
+    static List<String> s = new ArrayList<>();
 
     public static void main(String[] args) {
         s.add("name");
@@ -62,6 +60,7 @@ public class Finco implements IFinco {
     public String getName() {
         return name;
     }
+
     public List<ICustomer> getCustomerList() {
 		return customerList;
 	}
