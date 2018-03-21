@@ -1,13 +1,14 @@
 package bs.framework;
 
 public class Account implements IAccount {
-    private int accNum;
+    private String accNum;
     private double balance;
     private TransactionManager manager;
     private ICustomer customer; // Tania
 
-    public Account(int accNum) {
-        this.accNum = accNum;
+    public Account(String accountnr) {
+        this.accNum = accountnr;
+        this.balance = 0.0;
         this.manager = new TransactionManager(null);
     }
 
@@ -27,9 +28,10 @@ public class Account implements IAccount {
 
     @Override
     public void addInterest() {
+    		setBalance(balance + balance*0.01);
     }
 
-    public int getAccNum() {
+    public String getAccNum() {
         return accNum;
     }
 

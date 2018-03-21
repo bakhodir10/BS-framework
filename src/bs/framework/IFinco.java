@@ -2,7 +2,7 @@ package bs.framework;
 
 public interface IFinco {
 
-    void addInterest(double amount);
+    void addInterest();
 
     void create(ICustomer customer, IAccount account);
 
@@ -10,5 +10,5 @@ public interface IFinco {
 
     void withdraw(IAccount account, double amount);
 
-    void accountReport();
+    String accountReport();
 }

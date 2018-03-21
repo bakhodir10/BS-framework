@@ -1,7 +1,10 @@
 package bs.framework;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import bs.framework_ui.Forum;
 
 public class Finco implements IFinco {
     private String name;
@@ -14,7 +17,7 @@ public class Finco implements IFinco {
     }
 
     @Override
-    public void addInterest(double amount) {
+    public void addInterest() {
         this.accountList.forEach(e -> e.addInterest());
     }
 
@@ -35,7 +38,26 @@ public class Finco implements IFinco {
     }
 
     @Override
-    public void accountReport() {
-
+    public String accountReport() {
+    		String report = "Sample report\n";
+    		for(IAccount acc : accountList)
+    			report += acc.getBalance()+"\n";
+    		return report;
     }
+    
+    
+    static List<String> s = new ArrayList<String>();
+    
+    public static void main(String[] args) {
+    		s.add("name");
+    		s.add("accNum");
+    		s.add("street");
+    		
+    		Forum base = new Forum("FrameWork Test");
+    		base.setScrollPanel(s);
+    		base.setVisible(true);
+    }
+    
+    
+    
 }
