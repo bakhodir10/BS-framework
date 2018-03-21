@@ -1,6 +1,6 @@
 package bs.framework;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class History {
@@ -8,7 +8,7 @@ public class History {
     private List<ILogging> histories;
 
     private History() {
-        this.histories = new LinkedList<>();
+        this.histories = new ArrayList<>();
     }
 
     public static History getInstance() {

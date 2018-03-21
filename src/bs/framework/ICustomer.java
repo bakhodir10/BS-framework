@@ -12,4 +12,6 @@ public interface ICustomer {
     List<IAccount> getAccount();
 
     String getEmail();
+
+    String getName();
 }

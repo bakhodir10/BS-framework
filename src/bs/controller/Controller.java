@@ -55,7 +55,7 @@ public class Controller {
 			for (int i = view.model.getRowCount() - 1; i > -1; i--)
 				view.model.removeRow(i);
 
-		
+
 			for (IAccount y : finco.getAccountList()) {
 				view.rowdata[0] = ((Account) y).getAccNum();
 				view.rowdata[1] = ((Customer) y.getCustomer()).getName();
@@ -349,6 +349,7 @@ public class Controller {
 				view.city = JTextField_CT.getText();
 				view.zip = JTextField_ZIP.getText();
 				view.state = JTextField_ST.getText();
+				view.email = JTextField_EM.getText();
 				view.newaccount = true;
 				c.dispose();
 			}
