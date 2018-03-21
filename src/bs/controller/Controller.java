@@ -134,7 +134,7 @@ public class Controller {
 				if (view.newaccount) {
 					ICustomer compnay = new Company(view.clientName, view.street, view.city, view.state, view.zip,
 							view.email, view.numberOfEmployee);
-					IAccount account = new Account(view.accountnr);
+					IAccount account = new Account(view.accountnr, compnay);
 					finco.create(compnay, account);
 					// TODO how to show it from the list
 					view.rowdata[0] = view.accountnr;
@@ -183,7 +183,7 @@ public class Controller {
 				if (selection >= 0) {
 					
 					String accnr = (String) view.model.getValueAt(selection, 0);
-					IAccount acc = new Account(accnr);
+					IAccount acc = new Account(accnr, );
 					JDialog_Custom jd = new JDialog_Custom(view, "Withdraw");
 					prepareWithdrawWindow(jd, accnr);
 					jd.setBounds(430, 15, 275, 140);

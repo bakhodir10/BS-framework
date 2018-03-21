@@ -6,9 +6,9 @@ public class Account implements IAccount {
     private TransactionManager manager;
     private ICustomer customer; // Tania
 
-    public Account(String accountnr) {
-        this.accNum = accountnr;
-        this.balance = 0.0;
+    public Account(String accNum, ICustomer customer) {
+        this.accNum = accNum;
+        this.customer = customer;
         this.manager = new TransactionManager(null);
     }
 
@@ -28,7 +28,7 @@ public class Account implements IAccount {
 
     @Override
     public void addInterest() {
-    		setBalance(balance + balance*0.01);
+        setBalance(balance + balance * 0.01);
     }
 
     public String getAccNum() {

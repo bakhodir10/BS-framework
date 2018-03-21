@@ -5,7 +5,7 @@ import bs.framework.Account;
 public class Checkings extends Account {
     private final double interestRate = 0.01;
 
-    public Checkings(int accNum) {
+    public Checkings(String accNum) {
         super(accNum);
     }
 

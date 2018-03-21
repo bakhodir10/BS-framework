@@ -5,7 +5,7 @@ import bs.framework.Account;
 public class Savings extends Account {
     private final double interestRate = 0.0325;
 
-    public Savings(int accNum) {
+    public Savings(String accNum) {
         super(accNum);
     }
 
