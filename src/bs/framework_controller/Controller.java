@@ -1,4 +1,4 @@
-package bs.controller;
+package bs.framework_controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,15 +8,12 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 import bs.framework.Account;
-import bs.framework.Company;
 import bs.framework.Customer;
 import bs.framework.Finco;
 import bs.framework.IAccount;
 import bs.framework.ICustomer;
-import bs.framework.Person;
 
 import bs.framework_ui.Forum;
 import bs.framework_ui.JDialog_Custom;

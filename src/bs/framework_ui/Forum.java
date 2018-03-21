@@ -30,6 +30,8 @@ public class Forum extends javax.swing.JFrame
 	public int numberOfEmployee;
 	public String amountDeposit;
 	public String amountwithDraw;
+	public String ccnumber;
+	public String expdate;
 	public SymAction lSymAction;
     Forum myframe;
     public Object rowdata[];
