@@ -1,4 +1,4 @@
-package bs.controller;
+package bs.bank;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,20 +8,17 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 import bs.framework.Account;
-import bs.framework.Company;
 import bs.framework.Customer;
 import bs.framework.Finco;
 import bs.framework.IAccount;
 import bs.framework.ICustomer;
-import bs.framework.Person;
 
 import bs.framework_ui.Forum;
 import bs.framework_ui.JDialog_Custom;
 
-public class Controller {
+public class BankController {
 
 	static Forum view;
 	static Finco finco;
@@ -35,7 +32,7 @@ public class Controller {
 	static javax.swing.JButton JButton_Withdraw;
 	static Date now;
 
-	public Controller() {
+	public BankController() {
 		initializeFinco();
 		view = new Forum("Finco Test");
 		initializeScrollPanel();
@@ -46,7 +43,7 @@ public class Controller {
 
 	public static void main(String[] args) {
 
-		new Controller();
+		new BankController();
 
 	}
 
@@ -55,20 +52,19 @@ public class Controller {
 			for (int i = view.model.getRowCount() - 1; i > -1; i--)
 				view.model.removeRow(i);
 
-		
-			for (IAccount y : finco.getAccountList()) {
-				view.rowdata[0] = ((Account) y).getAccNum();
-				view.rowdata[1] = ((Customer) y.getCustomer()).getName();
-				view.rowdata[2] = ((Customer) y.getCustomer()).getCity();
-				view.rowdata[3] = ((Customer) y.getCustomer()).getZip();
-				view.rowdata[4] = ((Account) y).getBalance();
-				view.model.addRow(view.rowdata);
-			}
-
+		for (IAccount y : finco.getAccountList()) {
+			view.rowdata[0] = ((Account) y).getAccNum();
+			view.rowdata[1] = ((Customer) y.getCustomer()).getName();
+			view.rowdata[2] = ((Customer) y.getCustomer()).getCity();
+			view.rowdata[3] = ((Customer) y.getCustomer()).getType();
+			view.rowdata[4] = ((Account) y).getType();
+			view.rowdata[5] = ((Account) y).getBalance();
+			view.model.addRow(view.rowdata);
+		}
 	}
 
 	void initializeFinco() {
-		finco = new Finco("Finco Test");
+		finco = new Finco("Bank");
 	}
 
 	void initializeScrollPanel() {
@@ -76,9 +72,9 @@ public class Controller {
 		cols.add("AccountNr");
 		cols.add("Name");
 		cols.add("City");
-		cols.add("Zip");
+		cols.add("P/C");
+		cols.add("Ch/S");
 		cols.add("Amount");
-
 	}
 
 	void initializeButtons() {
@@ -88,20 +84,26 @@ public class Controller {
 		JButton_AccReport = new javax.swing.JButton();
 		JButton_Deposit = new javax.swing.JButton();
 		JButton_Withdraw = new javax.swing.JButton();
+		JButton_NewCompany = new javax.swing.JButton();
 
-		JButton_NewPerson.setText("Add New");
-		JButton_NewPerson.setBounds(24, 20, 160, 33);
+		JButton_NewPerson.setText("Add Personal Account");
+		JButton_NewPerson.setBounds(10, 20, 160, 33);
 		JButton_NewPerson.setActionCommand("jbutton");
 		view.addButton(JButton_NewPerson);
 
-		JButton_AccReport.setText("Report");
-		JButton_AccReport.setActionCommand("jbutton");
-		JButton_AccReport.setBounds(210, 20, 160, 33);
-		view.addButton(JButton_AccReport);
+		JButton_NewCompany.setText("Add Company Account");
+		JButton_NewCompany.setActionCommand("jbutton");
+		JButton_NewCompany.setBounds(190, 20, 160, 33);
+		view.addButton(JButton_NewCompany);
 
-		JButton_AddInterest.setBounds(390, 20, 160, 33);
+		JButton_AddInterest.setBounds(360, 20, 100, 33);
 		JButton_AddInterest.setText("Add interest");
 		view.addButton(JButton_AddInterest);
+
+		JButton_AccReport.setText("Report");
+		JButton_AccReport.setActionCommand("jbutton");
+		JButton_AccReport.setBounds(470, 20, 80, 33);
+		view.addButton(JButton_AccReport);
 
 		JButton_Deposit.setText("Deposit");
 		JButton_Deposit.setBounds(468, 104, 96, 33);
@@ -119,10 +121,14 @@ public class Controller {
 				jd.show();
 				if (!view.newaccount)
 					return;
-				ICustomer customer = new Customer(view.clientName, view.street, view.city, view.state, view.zip,
-						view.email);
-				IAccount account = new Account(view.accountnr, customer);
-				finco.create(customer, account);
+				ICustomer person = CustomerFactory.getPerson(view.clientName, view.street, view.city, view.state,
+						view.zip, view.email, now);
+				IAccount account;
+				if (view.accountType.equals("Ch"))
+					account = AccountFactory.getCheckings(view.accountnr, person);
+				else
+					account = AccountFactory.getSavings(view.accountnr, person);
+				finco.create(person, account);
 				fillTable();
 			}
 		});
@@ -157,13 +163,36 @@ public class Controller {
 					double currentamount = getAccountByAccID(accnr).getBalance();
 					if (currentamount - withDraw < 0) {
 						JOptionPane.showMessageDialog(JButton_Withdraw,
-								" Account " + accnr + " : balance is negative: $" + String.valueOf(currentamount - withDraw) + " !",
+								" Account " + accnr + " : balance is negative: $"
+										+ String.valueOf(currentamount - withDraw) + " !",
 								"Warning: negative balance", JOptionPane.WARNING_MESSAGE);
 						return;
-					} 
+					}
 					finco.withdraw(getAccountByAccID(accnr), withDraw);
 					fillTable();
 				}
+
+			}
+		});
+
+		JButton_NewCompany.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JDialog_Custom jd = new JDialog_Custom(view, "Add Company account");
+				prepareCompanyAccount(jd);
+				jd.setBounds(450, 20, 300, 330);
+				jd.show();
+
+				if (!view.newaccount)
+					return;
+				ICustomer compnay = CustomerFactory.getCompany(view.clientName, view.street, view.city, view.state,
+						view.zip, view.email, view.numberOfEmployee);
+				IAccount account;
+				if (view.accountType.equals("Ch"))
+					account = AccountFactory.getCheckings(view.accountnr, compnay);
+				else
+					account = AccountFactory.getSavings(view.accountnr, compnay);
+				finco.create(compnay, account);
+				fillTable();
 
 			}
 		});
@@ -186,6 +215,7 @@ public class Controller {
 				// TODO update the view
 			}
 		});
+		
 	}
 
 	void prepareAccReportWindow(JDialog_Custom c) {
@@ -281,7 +311,19 @@ public class Controller {
 		javax.swing.JButton JButton_Cancel = new javax.swing.JButton();
 		javax.swing.JTextField JTextField_ACNR = new javax.swing.JTextField();
 		javax.swing.JLabel JLabel8 = new javax.swing.JLabel();
-
+		
+		javax.swing.JRadioButton JRadioButton_Chk = new javax.swing.JRadioButton();
+		javax.swing.JRadioButton JRadioButton_Sav = new javax.swing.JRadioButton();
+		
+		JRadioButton_Chk.setText("Checkings");
+		JRadioButton_Chk.setActionCommand("Checkings");
+		c.getContentPane().add(JRadioButton_Chk);
+		JRadioButton_Chk.setBounds(36, 12, 84, 24);
+		JRadioButton_Sav.setText("Savings");
+		JRadioButton_Sav.setActionCommand("Savings");
+		c.getContentPane().add(JRadioButton_Sav);
+		JRadioButton_Sav.setBounds(36, 36, 84, 24);
+		
 		c.setSize(283, 303);
 
 		JLabel1.setText("Name");
@@ -349,6 +391,10 @@ public class Controller {
 				view.zip = JTextField_ZIP.getText();
 				view.state = JTextField_ST.getText();
 				view.email = JTextField_EM.getText();
+				if (JRadioButton_Chk.isSelected())
+					view.accountType = "Ch";
+				else
+					view.accountType = "S";
 				view.newaccount = true;
 				c.dispose();
 			}
@@ -357,6 +403,25 @@ public class Controller {
 			public void actionPerformed(java.awt.event.ActionEvent event) {
 				view.newaccount = false;
 				c.dispose();
+			}
+		});
+
+		JRadioButton_Chk.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+				// When Checking radio is clicked make this radio on
+				// and make Saving account radio off
+				JRadioButton_Chk.setSelected(true);
+				JRadioButton_Sav.setSelected(false);
+			}
+		});
+		JRadioButton_Sav.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+
+				// When Saving radio is clicked make this radio on
+				// and make Checking account radio off
+				JRadioButton_Chk.setSelected(false);
+				JRadioButton_Sav.setSelected(true);
+
 			}
 		});
 
@@ -408,104 +473,151 @@ public class Controller {
 		});
 
 	}
+
 	IAccount getAccountByAccID(String accID) {
-		for(ICustomer x : finco.getCustomerList())
-		{
-			for(IAccount ac : ((Customer)x).getAccount())
-				if(((Account)ac).getAccNum().equals(accID))
+		for (ICustomer x : finco.getCustomerList()) {
+			for (IAccount ac : ((Customer) x).getAccount())
+				if (((Account) ac).getAccNum().equals(accID))
 					return ac;
 		}
 		return null;
 	}
 
+	void prepareCompanyAccount(JDialog_Custom c) {
+		c.setSize(298, 339);
+		javax.swing.JLabel JLabel1 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel2 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel3 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel4 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel5 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel6 = new javax.swing.JLabel();
+		javax.swing.JLabel JLabel7 = new javax.swing.JLabel();
+		javax.swing.JTextField JTextField_NAME = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_CT = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_ST = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_STR = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_ZIP = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_NoOfEmp = new javax.swing.JTextField();
+		javax.swing.JTextField JTextField_EM = new javax.swing.JTextField();
+		javax.swing.JButton JButton_OK = new javax.swing.JButton();
+		javax.swing.JButton JButton_Calcel = new javax.swing.JButton();
+		javax.swing.JLabel JLabel8 = new javax.swing.JLabel();
+		javax.swing.JTextField JTextField_ACNR = new javax.swing.JTextField();
+
+		javax.swing.JRadioButton JRadioButton_Chk = new javax.swing.JRadioButton();
+		javax.swing.JRadioButton JRadioButton_Sav = new javax.swing.JRadioButton();
+
+		JRadioButton_Chk.setText("Checkings");
+		JRadioButton_Chk.setActionCommand("Checkings");
+		c.getContentPane().add(JRadioButton_Chk);
+		JRadioButton_Chk.setBounds(36, 12, 84, 24);
+		JRadioButton_Sav.setText("Savings");
+		JRadioButton_Sav.setActionCommand("Savings");
+		c.getContentPane().add(JRadioButton_Sav);
+		JRadioButton_Sav.setBounds(36, 36, 84, 24);
+
+		JLabel1.setText("Name");
+		c.getContentPane().add(JLabel1);
+		JLabel1.setForeground(java.awt.Color.black);
+		JLabel1.setBounds(12, 96, 48, 24);
+		JLabel2.setText("Street");
+		c.getContentPane().add(JLabel2);
+		JLabel2.setForeground(java.awt.Color.black);
+		JLabel2.setBounds(12, 120, 48, 24);
+		JLabel3.setText("City");
+		c.getContentPane().add(JLabel3);
+		JLabel3.setForeground(java.awt.Color.black);
+		JLabel3.setBounds(12, 144, 48, 24);
+		JLabel4.setText("State");
+		c.getContentPane().add(JLabel4);
+		JLabel4.setForeground(java.awt.Color.black);
+		JLabel4.setBounds(12, 168, 48, 24);
+		JLabel5.setText("Zip");
+		c.getContentPane().add(JLabel5);
+		JLabel5.setForeground(java.awt.Color.black);
+		JLabel5.setBounds(12, 192, 48, 24);
+		JLabel6.setText("No of employees");
+		c.getContentPane().add(JLabel6);
+		JLabel6.setForeground(java.awt.Color.black);
+		JLabel6.setBounds(12, 216, 96, 24);
+		JLabel7.setText("Email");
+		c.getContentPane().add(JLabel7);
+		JLabel7.setForeground(java.awt.Color.black);
+		JLabel7.setBounds(12, 240, 48, 24);
+		c.getContentPane().add(JTextField_NAME);
+		JTextField_NAME.setBounds(120, 96, 156, 20);
+		c.getContentPane().add(JTextField_CT);
+		JTextField_CT.setBounds(120, 144, 156, 20);
+		c.getContentPane().add(JTextField_ST);
+		JTextField_ST.setBounds(120, 168, 156, 20);
+		c.getContentPane().add(JTextField_STR);
+		JTextField_STR.setBounds(120, 120, 156, 20);
+		c.getContentPane().add(JTextField_ZIP);
+		JTextField_ZIP.setBounds(120, 192, 156, 20);
+		c.getContentPane().add(JTextField_NoOfEmp);
+		JTextField_NoOfEmp.setBounds(120, 216, 156, 20);
+		c.getContentPane().add(JTextField_EM);
+		JTextField_EM.setBounds(120, 240, 156, 20);
+		JButton_OK.setText("OK");
+		JButton_OK.setActionCommand("OK");
+		c.getContentPane().add(JButton_OK);
+		JButton_OK.setBounds(48, 276, 84, 24);
+		JButton_Calcel.setText("Cancel");
+		JButton_Calcel.setActionCommand("Cancel");
+		c.getContentPane().add(JButton_Calcel);
+		JButton_Calcel.setBounds(156, 276, 84, 24);
+		JLabel8.setText("Acc Nr");
+		c.getContentPane().add(JLabel8);
+		JLabel8.setForeground(java.awt.Color.black);
+		JLabel8.setBounds(12, 72, 48, 24);
+		c.getContentPane().add(JTextField_ACNR);
+		JTextField_ACNR.setBounds(120, 72, 156, 20);
+
+		JButton_OK.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+				view.accountnr = JTextField_ACNR.getText();
+				view.clientName = JTextField_NAME.getText();
+				view.street = JTextField_STR.getText();
+				view.city = JTextField_CT.getText();
+				view.zip = JTextField_ZIP.getText();
+				view.state = JTextField_ST.getText();
+				view.numberOfEmployee = Integer.parseInt(JTextField_NoOfEmp.getText());
+				if (JRadioButton_Chk.isSelected())
+					view.accountType = "Ch";
+				else
+					view.accountType = "S";
+				view.newaccount = true;
+				c.dispose();
+			}
+		});
+
+		JButton_Calcel.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+				view.newaccount = false;
+				c.dispose();
+
+			}
+		});
+
+		JRadioButton_Chk.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+				// When Checking radio is clicked make this radio on
+				// and make Saving account radio off
+				JRadioButton_Chk.setSelected(true);
+				JRadioButton_Sav.setSelected(false);
+			}
+		});
+		JRadioButton_Sav.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent event) {
+
+				// When Saving radio is clicked make this radio on
+				// and make Checking account radio off
+				JRadioButton_Chk.setSelected(false);
+				JRadioButton_Sav.setSelected(true);
+
+			}
+		});
+
+	}
+
 }
-/*
- * JButton_NewCompany = new javax.swing.JButton();
- * JButton_NewCompany.setText("Add company acc");
- * JButton_NewCompany.setActionCommand("jbutton");
- * JButton_NewCompany.setBounds(170, 20, 130, 33);
- * view.addButton(JButton_NewCompany); JButton_NewCompany.addActionListener(new
- * ActionListener() { public void actionPerformed(ActionEvent e) {
- * JDialog_Custom jd = new JDialog_Custom(view, "Add Company account");
- * prepareCompanyAccount(jd); jd.setBounds(450, 20, 300, 330); jd.show();
- * 
- * if (view.newaccount) { ICustomer compnay = new Company(view.clientName,
- * view.street, view.city, view.state, view.zip, view.email,
- * view.numberOfEmployee); IAccount account = new Account(view.accountnr,
- * compnay); finco.create(compnay, account); // TODO how to show it from the
- * list view.rowdata[0] = view.accountnr; view.rowdata[1] = view.clientName;
- * view.rowdata[2] = view.city; view.rowdata[3] = "C"; // view.rowdata[4] =
- * view.accountType; // view.rowdata[5] = view.numberOfEmployee; view.rowdata[4]
- * = "0"; view.model.addRow(view.rowdata); //
- * view.JTable1.getSelectionModel().setAnchorSelectionIndex(-1); view.newaccount
- * = false; } } });
- * 
- * void prepareCompanyAccount(JDialog_Custom c) { c.setSize(298,339);
- * javax.swing.JLabel JLabel1 = new javax.swing.JLabel(); javax.swing.JLabel
- * JLabel2 = new javax.swing.JLabel(); javax.swing.JLabel JLabel3 = new
- * javax.swing.JLabel(); javax.swing.JLabel JLabel4 = new javax.swing.JLabel();
- * javax.swing.JLabel JLabel5 = new javax.swing.JLabel(); javax.swing.JLabel
- * JLabel6 = new javax.swing.JLabel(); javax.swing.JLabel JLabel7 = new
- * javax.swing.JLabel(); javax.swing.JTextField JTextField_NAME = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_CT = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_ST = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_STR = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_ZIP = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_NoOfEmp = new
- * javax.swing.JTextField(); javax.swing.JTextField JTextField_EM = new
- * javax.swing.JTextField(); javax.swing.JButton JButton_OK = new
- * javax.swing.JButton(); javax.swing.JButton JButton_Calcel = new
- * javax.swing.JButton(); javax.swing.JLabel JLabel8 = new javax.swing.JLabel();
- * javax.swing.JTextField JTextField_ACNR = new javax.swing.JTextField();
- * 
- * JLabel1.setText("Name"); c.getContentPane().add(JLabel1);
- * JLabel1.setForeground(java.awt.Color.black); JLabel1.setBounds(12,96,48,24);
- * JLabel2.setText("Street"); c.getContentPane().add(JLabel2);
- * JLabel2.setForeground(java.awt.Color.black); JLabel2.setBounds(12,120,48,24);
- * JLabel3.setText("City"); c.getContentPane().add(JLabel3);
- * JLabel3.setForeground(java.awt.Color.black); JLabel3.setBounds(12,144,48,24);
- * JLabel4.setText("State"); c.getContentPane().add(JLabel4);
- * JLabel4.setForeground(java.awt.Color.black); JLabel4.setBounds(12,168,48,24);
- * JLabel5.setText("Zip"); c.getContentPane().add(JLabel5);
- * JLabel5.setForeground(java.awt.Color.black); JLabel5.setBounds(12,192,48,24);
- * JLabel6.setText("No of employees"); c.getContentPane().add(JLabel6);
- * JLabel6.setForeground(java.awt.Color.black); JLabel6.setBounds(12,216,96,24);
- * JLabel7.setText("Email"); c.getContentPane().add(JLabel7);
- * JLabel7.setForeground(java.awt.Color.black); JLabel7.setBounds(12,240,48,24);
- * c.getContentPane().add(JTextField_NAME);
- * JTextField_NAME.setBounds(120,96,156,20);
- * c.getContentPane().add(JTextField_CT);
- * JTextField_CT.setBounds(120,144,156,20);
- * c.getContentPane().add(JTextField_ST);
- * JTextField_ST.setBounds(120,168,156,20);
- * c.getContentPane().add(JTextField_STR);
- * JTextField_STR.setBounds(120,120,156,20);
- * c.getContentPane().add(JTextField_ZIP);
- * JTextField_ZIP.setBounds(120,192,156,20);
- * c.getContentPane().add(JTextField_NoOfEmp);
- * JTextField_NoOfEmp.setBounds(120,216,156,20);
- * c.getContentPane().add(JTextField_EM);
- * JTextField_EM.setBounds(120,240,156,20); JButton_OK.setText("OK");
- * JButton_OK.setActionCommand("OK"); c.getContentPane().add(JButton_OK);
- * JButton_OK.setBounds(48,276,84,24); JButton_Calcel.setText("Cancel");
- * JButton_Calcel.setActionCommand("Cancel");
- * c.getContentPane().add(JButton_Calcel);
- * JButton_Calcel.setBounds(156,276,84,24); JLabel8.setText("Acc Nr");
- * c.getContentPane().add(JLabel8); JLabel8.setForeground(java.awt.Color.black);
- * JLabel8.setBounds(12,72,48,24); c.getContentPane().add(JTextField_ACNR);
- * JTextField_ACNR.setBounds(120,72,156,20);
- * 
- * JButton_OK.addActionListener(new ActionListener() { public void
- * actionPerformed(java.awt.event.ActionEvent event) {
- * view.accountnr=JTextField_ACNR.getText();
- * view.clientName=JTextField_NAME.getText();
- * view.street=JTextField_STR.getText(); view.city=JTextField_CT.getText();
- * view.zip=JTextField_ZIP.getText(); view.state=JTextField_ST.getText();
- * view.numberOfEmployee = Integer.parseInt(JTextField_NoOfEmp.getText());
- * view.newaccount=true; c.dispose(); } }); JButton_Calcel.addActionListener(new
- * ActionListener() { public void actionPerformed(java.awt.event.ActionEvent
- * event) { view.newaccount=false; c.dispose();
- * 
- * } }); }
- * 
- */

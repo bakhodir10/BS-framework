@@ -15,4 +15,8 @@ public class Savings extends Account {
         double balance = this.getBalance();
         this.setBalance(balance + balance * interestRate);
     }
+    @Override
+    public String getType() {
+    		return "S";
+    }
 }

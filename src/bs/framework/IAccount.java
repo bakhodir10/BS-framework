@@ -14,4 +14,6 @@ public interface IAccount {
     double getBalance();
 
     ICustomer getCustomer();
+    
+    String getType();
 }

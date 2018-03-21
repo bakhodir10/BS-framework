@@ -15,4 +15,8 @@ public class Checkings extends Account {
         double balance = this.getBalance();
         this.setBalance(balance + interestRate * balance);
     }
+    @Override
+    public String getType() {
+    		return "Ch";
+    }
 }

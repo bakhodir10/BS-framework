@@ -88,6 +88,7 @@ public class Customer implements ICustomer {
         this.email = email;
     }
 
+
     @Override
     public List<IAccount> getAccount() {
         return this.accountList;
@@ -100,10 +101,11 @@ public class Customer implements ICustomer {
         return this.email.equals(c.getEmail());
     }
 
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + email.hashCode();
-        return result;
-    }
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "DEFAULT";
+	}
+
+
 }

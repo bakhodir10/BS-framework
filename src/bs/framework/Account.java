@@ -56,5 +56,11 @@ public class Account implements IAccount {
         this.balance = balance;
     }
 
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "DEFAULT";
+	}
+
 
 }
