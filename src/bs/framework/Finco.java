@@ -1,17 +1,18 @@
 package bs.framework;
 
+import bs.framework_ui.Forum;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import bs.framework_ui.Forum;
 
 public class Finco implements IFinco {
     private String name;
     private List<ICustomer> customerList;
     private List<IAccount> accountList;
 
-    public Finco() {
+    public Finco(String name) {
+        this.name = name;
         this.customerList = new LinkedList<>();
         this.accountList = new LinkedList<>();
     }
@@ -39,25 +40,26 @@ public class Finco implements IFinco {
 
     @Override
     public String accountReport() {
-    		String report = "Sample report\n";
-    		for(IAccount acc : accountList)
-    			report += acc.getBalance()+"\n";
-    		return report;
+        String report = "Sample report\n";
+        for (IAccount acc : accountList)
+            report += acc.getBalance() + "\n";
+        return report;
     }
-    
-    
+
+
     static List<String> s = new ArrayList<String>();
-    
+
     public static void main(String[] args) {
-    		s.add("name");
-    		s.add("accNum");
-    		s.add("street");
-    		
-    		Forum base = new Forum("FrameWork Test");
-    		base.setScrollPanel(s);
-    		base.setVisible(true);
+        s.add("name");
+        s.add("accNum");
+        s.add("street");
+
+        Forum base = new Forum("FrameWork Test");
+        base.setScrollPanel(s);
+        base.setVisible(true);
     }
-    
-    
-    
+
+    public String getName() {
+        return name;
+    }
 }
