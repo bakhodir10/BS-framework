@@ -114,13 +114,7 @@ public class CreditCardController {
 				if (!view.newaccount)
 					return;		
 				ICustomer person = new Customer(view.clientName, view.street, view.city, view.state, view.zip, view.email);
-				IAccount account;
-				if (view.accountType.equals("Gold"))
-					account = AccountFactory.getGold(view.accountnr, person, view.ccnumber, view.expdate);
-				else if (view.accountType.equals("Silver"))
-					account = AccountFactory.getSilver(view.accountnr, person, view.ccnumber, view.expdate);
-				else
-					account = AccountFactory.getBronze(view.accountnr, person, view.ccnumber, view.expdate);
+				IAccount account = AccountFactory.createAccount(view.accountType, view.accountnr, person, view.ccnumber, view.expdate);
 				finco.create(person, account);
 				fillTable();
 			}
