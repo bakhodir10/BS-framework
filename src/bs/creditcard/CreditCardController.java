@@ -156,10 +156,15 @@ public class CreditCardController {
 
 		JButton_AccReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JDialog_Custom jd = new JDialog_Custom(view, "Account Report");
-				prepareAccReportWindow(jd);
-				jd.setBounds(450, 20, 400, 350);
-				jd.show();
+				int selection = view.JTable1.getSelectionModel().getMinSelectionIndex();
+				if (selection >= 0) {
+					String accnr = (String) view.model.getValueAt(selection, 1);
+					IAccount acc = getAccountByCCID(accnr);
+					JDialog_Custom jd = new JDialog_Custom(view, "Account Report");
+					prepareAccReportWindow(jd, acc);
+					jd.setBounds(450, 20, 400, 350);
+					jd.show();	
+				}
 			}
 		});
 
@@ -175,7 +180,7 @@ public class CreditCardController {
 		
 	}
 
-	void prepareAccReportWindow(JDialog_Custom c) {
+	void prepareAccReportWindow(JDialog_Custom c, IAccount acc) {
 		c.setSize(405, 367);
 
 		javax.swing.JScrollPane JScrollPane1 = new javax.swing.JScrollPane();
@@ -196,7 +201,7 @@ public class CreditCardController {
 					c.dispose();
 			}
 		});
-		String billstring = finco.report();
+		String billstring = finco.report((CreditCardAccount)acc);
 		JTextField1.setText(billstring);
 	}
 
