@@ -10,4 +10,6 @@ public interface ILogging {
     double getAmount();
 
     Date getDate();
+
+    TransferType getType();
 }

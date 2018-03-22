@@ -1,9 +1,9 @@
 package bs.creditcard;
 
-import bs.framework.Account;
-import bs.framework.ICustomer;
+import bs.framework.*;
 
 import java.util.Date;
+import java.util.List;
 
 public class CreditCardAccount extends Account {
     private String ccNumber;
@@ -24,29 +24,52 @@ public class CreditCardAccount extends Account {
         return expireDate;
     }
 
-    public double getCurrentBalance() {
-        return this.getBalance();
-    }
-
     public double getLastMonthBalance() {
-        return 0d;
+        int lastMonth = new Date().getMonth();
+        double lastMonthBalance = 0;
+        List<ILogging> histories = History.getInstance().getHistories();
+
+        for (ILogging logging : histories) {
+            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() < lastMonth) {
+                if (logging.getType() == TransferType.DEPOSIT) lastMonthBalance += logging.getAmount();
+                else lastMonthBalance -= logging.getAmount();
+            }
+        }
+        return lastMonthBalance;
     }
 
     public double getTotalMonthlyCredits() {
-        return 0;
+        int lastMonth = new Date().getMonth();
+        double totalMonthlyCredits = 0;
+        List<ILogging> histories = History.getInstance().getHistories();
+
+        for (ILogging logging : histories) {
+            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() > lastMonth) {
+                if (logging.getType() == TransferType.DEPOSIT) totalMonthlyCredits += logging.getAmount();
+            }
+        }
+        return totalMonthlyCredits;
     }
 
     public double getTotalMonthlyCharges() {
+        int lastMonth = new Date().getMonth();
+        double totalMonthlyCharges = 0;
+        List<ILogging> histories = History.getInstance().getHistories();
 
-
-        return 0;
+        for (ILogging logging : histories) {
+            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() > lastMonth) {
+                if (logging.getType() == TransferType.WITHDRAW) totalMonthlyCharges += logging.getAmount();
+            }
+        }
+        return totalMonthlyCharges;
     }
 
+//    // new balance = previous balance – total credits + total charges + MI * (previous balance – total credits)
     public double getNewMonthlyBalance() {
         return 0;
     }
 
-    public double getMonthlyAmountDue() {
+    public double getNewMonthlyAmountDue() {
         return 0;
     }
 }

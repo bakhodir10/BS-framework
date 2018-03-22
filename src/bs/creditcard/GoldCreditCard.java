@@ -14,12 +14,18 @@ public class GoldCreditCard extends CreditCardAccount {
 
     @Override
     public double getNewMonthlyBalance() {
-        return 0;
+
+        double lastMonthBalance = getLastMonthBalance();
+        double totalMonthlyCredits = getTotalMonthlyCredits();
+        double totalMonthlyCharges = getTotalMonthlyCharges();
+
+        return lastMonthBalance + totalMonthlyCredits + totalMonthlyCharges + mi * (lastMonthBalance - totalMonthlyCredits);
     }
 
     @Override
-    public double getMonthlyAmountDue() {
-        return 0;
+    public double getNewMonthlyAmountDue() {
+        double lastMonthBalance = getLastMonthBalance();
+        return mp * lastMonthBalance;
     }
 
     @Override

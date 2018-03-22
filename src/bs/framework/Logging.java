@@ -34,4 +34,8 @@ public class Logging implements ILogging {
     public Date getDate() {
         return this.date;
     }
+
+    public TransferType getType() {
+        return type;
+    }
 }
