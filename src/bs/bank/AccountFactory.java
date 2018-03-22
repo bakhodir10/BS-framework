@@ -5,11 +5,11 @@ import bs.framework.ICustomer;
 
 public class AccountFactory {
 	
-	static Account getCheckings(String accNum, ICustomer customer) {
-		return new Checkings(accNum, customer);
-	}
-	
-	static Account getSavings(String accNum, ICustomer customer) {
-		return new Savings(accNum, customer);
+	static Account getCheckings(String type, String accNum, ICustomer customer) {
+		if(type.equals("S"))		
+			return new Savings(accNum, customer);
+		else if(type.equals("Ch"))
+			return new Checkings(accNum, customer);
+		return new Account(accNum, customer);
 	}
 }

@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import bs.framework.Account;
 import bs.framework.Customer;
+import bs.framework.CustomerFactory;
 import bs.framework.Finco;
 import bs.framework.IAccount;
 import bs.framework.ICustomer;
@@ -115,15 +116,10 @@ public class BankController {
 				preparePersonAccount(jd);
 				jd.setBounds(450, 20, 300, 330);
 				jd.show();
-				if (!view.newaccount)
-					return;
-				ICustomer person = CustomerFactory.getPerson(view.clientName, view.street, view.city, view.state,
-						view.zip, view.email, now);
-				IAccount account;
-				if (view.accountType.equals("Ch"))
-					account = AccountFactory.getCheckings(view.accountnr, person);
-				else
-					account = AccountFactory.getSavings(view.accountnr, person);
+				if (!view.newaccount) return;
+				ICustomer person = CustomerFactory.createCustomer("P",view.clientName, view.street, view.city, view.state,
+						view.zip, view.email, now, 0);
+				IAccount account = AccountFactory.getCheckings(view.accountType, view.accountnr, person);
 				finco.create(person, account);
 				fillTable();
 			}
@@ -180,14 +176,11 @@ public class BankController {
 
 				if (!view.newaccount)
 					return;
-				ICustomer compnay = CustomerFactory.getCompany(view.clientName, view.street, view.city, view.state,
-						view.zip, view.email, view.numberOfEmployee);
-				IAccount account;
-				if (view.accountType.equals("Ch"))
-					account = AccountFactory.getCheckings(view.accountnr, compnay);
-				else
-					account = AccountFactory.getSavings(view.accountnr, compnay);
-				finco.create(compnay, account);
+				
+				ICustomer company = CustomerFactory.createCustomer("P",view.clientName, view.street, view.city, view.state,
+						view.zip, view.email, null, view.numberOfEmployee);
+				IAccount account = AccountFactory.getCheckings(view.accountType, view.accountnr, company);
+				finco.create(company, account);
 				fillTable();
 
 			}

@@ -1,6 +1,4 @@
-package bs.bank;
-
-import bs.framework.Customer;
+package bs.framework;
 
 public class Company extends Customer {
     private int numOfEmployees;

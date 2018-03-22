@@ -1,8 +1,6 @@
-package bs.bank;
+package bs.framework;
 
 import java.util.Date;
-
-import bs.framework.Customer;
 
 public class Person extends Customer {
     private Date bDate;
