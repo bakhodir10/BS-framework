@@ -10,8 +10,8 @@ public class DbUtil {
 	final static String DB_URL = "jdbc:mysql://localhost:3306/db_framework";
 	final static String DB_URL_INIT = "jdbc:mysql://localhost:3306";
 	final static String dbname = "root";
-	final static String dbpwd = "";
-	final static String dbpwd_JAMA = "";
+	final static String dbpwd = "10";
+	final static String dbpwd_JAMA = "10";
 	
 	public static void createDatabase() throws SQLException {
 		Connection conn = DriverManager.getConnection(DB_URL_INIT, dbname, dbpwd);

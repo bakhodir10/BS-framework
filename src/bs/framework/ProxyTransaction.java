@@ -13,9 +13,9 @@ public class ProxyTransaction implements TransactionStrategy {
     }
 
     @Override
-    public void transact(IAccount account, double amount) {
-        this.transactionStrategy.transact(account, amount);
+    public void transact(IAccount account, double amount, TransferType type) {
+        this.transactionStrategy.transact(account, amount, type);
         if (amount > 500 || account.getBalance() < 0) this.message.sendMessage(account);
-        this.logging.log(account, amount);
+        this.logging.log(account, amount, type);
     }
 }
