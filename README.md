@@ -1,10 +1,13 @@
 #Group 5
 > ###Tania, Bakhodir, Jamsrandorj
 
-> Used Design Patterns: Observer, Account, Simple Factory, Strategy, Singleton, Proxy 
+> Used Design Patterns: Observer, Account, Party, Simple, Strategy, Singleton, Proxy factory
 
 ####Observer Pattern
 > We used this pattern to implement addInterest Function. All accounts are observers when user clicks addInterest button it will invoke.
+
+####Party Pattern
+> We used party pattern to generalize the common Customer data and methods.
 
 ####Account Pattern
 > We used this pattern to generalize the common Account infos.

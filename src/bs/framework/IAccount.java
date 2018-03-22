@@ -16,4 +16,6 @@ public interface IAccount {
     ICustomer getCustomer();
     
     String getType();
+
+    String getAccNum();
 }
