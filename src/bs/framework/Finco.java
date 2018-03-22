@@ -8,7 +8,7 @@ import java.util.List;
 public class Finco implements IFinco {
     private String name;
     private List<ICustomer> customerList;
-	private List<IAccount> accountList;
+    private List<IAccount> accountList;
 
     public Finco(String name) {
         this.name = name;
@@ -23,7 +23,7 @@ public class Finco implements IFinco {
 
     @Override
     public void create(ICustomer customer, IAccount account) {
-    		customer.addAccount(account);
+        customer.addAccount(account);
         this.accountList.add(account);
         this.customerList.add(customer);
     }
@@ -40,13 +40,9 @@ public class Finco implements IFinco {
 
     @Override
     public String report() {
-        String report = "Sample report\n";
-        for (IAccount acc : accountList)
-            report += acc.getBalance() + "\n";
-        return report;
+        return History.getInstance().getReport(this.customerList);
     }
-
-
+    
     static List<String> s = new ArrayList<String>();
 
     public static void main(String[] args) {
@@ -62,12 +58,13 @@ public class Finco implements IFinco {
     public String getName() {
         return name;
     }
-    public List<ICustomer> getCustomerList() {
-		return customerList;
-	}
 
-	public List<IAccount> getAccountList() {
-		return accountList;
-	}
+    public List<ICustomer> getCustomerList() {
+        return customerList;
+    }
+
+    public List<IAccount> getAccountList() {
+        return accountList;
+    }
 
 }

@@ -17,4 +17,19 @@ public class Logging implements ILogging {
     public void log(IAccount account, double amount) {
         History.getInstance().save(new Logging(account, amount));
     }
+
+    @Override
+    public IAccount getAccount() {
+        return this.account;
+    }
+
+    @Override
+    public double getAmount() {
+        return this.amount;
+    }
+
+    @Override
+    public Date getDate() {
+        return this.date;
+    }
 }
