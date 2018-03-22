@@ -9,8 +9,6 @@ public class BankFinco extends Finco {
 	}
 
 	public static void main(String[] args) {
-		new BankFinco("");
-		new BankController();
-
+		new BankController(new BankFinco("Bank"));
 	}
 }
