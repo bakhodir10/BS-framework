@@ -1,5 +1,7 @@
 package bs.creditcard;
 
+import bs.creditcard.account.CreditCardAccount;
+import bs.creditcard.ui.CreditCardController;
 import bs.framework.Finco;
 
 public class CreditCardFinco extends Finco {

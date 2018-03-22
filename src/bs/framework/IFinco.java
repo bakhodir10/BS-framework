@@ -1,5 +1,8 @@
 package bs.framework;
 
+import bs.framework.account.IAccount;
+import bs.framework.customer.ICustomer;
+
 public interface IFinco {
 
     void addInterest();

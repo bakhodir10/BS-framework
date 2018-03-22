@@ -1,6 +1,8 @@
 package bs.framework;
 
-import bs.framework_ui.Forum;
+import bs.framework.customer.ICustomer;
+import bs.framework.account.IAccount;
+import bs.framework.ui.Forum;
 
 import java.util.ArrayList;
 import java.util.List;
