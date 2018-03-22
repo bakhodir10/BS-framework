@@ -15,14 +15,14 @@ public class Account implements IAccount {
     @Override
     public void deposit(IAccount account, double amount) {
         manager.setTransactionStrategy(
-                new ProxyTransaction(new Deposit(), new Logging(account, amount), new Message()));
+                new ProxyTransaction(new Deposit(), new Logging(account, amount, TransferType.DEPOSIT), new Message()));
         manager.getTransactionStrategy().transact(account, amount);
     }
 
     @Override
     public void withdraw(IAccount account, double amount) {
         manager.setTransactionStrategy(
-                new ProxyTransaction(new Withdraw(), new Logging(account, amount), new Message()));
+                new ProxyTransaction(new Withdraw(), new Logging(account, amount, TransferType.WITHDRAW), new Message()));
         manager.getTransactionStrategy().transact(account, amount);
     }
 
@@ -56,11 +56,11 @@ public class Account implements IAccount {
         this.balance = balance;
     }
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return "DEFAULT";
-	}
+    @Override
+    public String getType() {
+        // TODO Auto-generated method stub
+        return "DEFAULT";
+    }
 
 
 }

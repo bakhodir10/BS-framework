@@ -49,4 +49,13 @@ public class History {
         }
         return report.toString();
     }
+
+    public double getLastMonthBalance(IAccount account) {
+        Date date = new Date();
+        int lastMonth = date.getMonth();
+
+        this.histories.stream().filter(e -> account.getAccNum().equals(e.getAccount().getAccNum()))
+                .filter(e -> e.getDate().getTime() > lastMonth);
+        return 0;
+    }
 }

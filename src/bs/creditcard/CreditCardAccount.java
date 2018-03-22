@@ -3,11 +3,12 @@ package bs.creditcard;
 import bs.framework.Account;
 import bs.framework.ICustomer;
 
+import java.util.Date;
+
 public class CreditCardAccount extends Account {
     private String ccNumber;
 
     private String expireDate;
-    private double lastMonthBalance;
 
     public CreditCardAccount(String accNum, ICustomer customer, String ccNumber, String expireDate) {
         super(accNum, customer);
@@ -15,8 +16,20 @@ public class CreditCardAccount extends Account {
         this.expireDate = expireDate;
     }
 
+    public String getCcNumber() {
+        return ccNumber;
+    }
+
+    public String getExpireDate() {
+        return expireDate;
+    }
+
+    public double getCurrentBalance() {
+        return this.getBalance();
+    }
+
     public double getLastMonthBalance() {
-        return lastMonthBalance;
+        return 0d;
     }
 
     public double getTotalMonthlyCredits() {
@@ -24,6 +37,7 @@ public class CreditCardAccount extends Account {
     }
 
     public double getTotalMonthlyCharges() {
+
 
         return 0;
     }
@@ -34,9 +48,5 @@ public class CreditCardAccount extends Account {
 
     public double getMonthlyAmountDue() {
         return 0;
-    }
-
-    public String getCcNumber() {
-        return ccNumber;
     }
 }

@@ -6,16 +6,18 @@ public class Logging implements ILogging {
     private IAccount account;
     private double amount;
     private Date date;
+    private TransferType type;
 
-    public Logging(IAccount account, double amount) {
+    public Logging(IAccount account, double amount, TransferType type) {
         this.account = account;
         this.amount = amount;
+        this.type = type;
         this.date = new Date();
     }
 
     @Override
-    public void log(IAccount account, double amount) {
-        History.getInstance().save(new Logging(account, amount));
+    public void log(IAccount account, double amount, TransferType type) {
+        History.getInstance().save(new Logging(account, amount, type));
     }
 
     @Override
