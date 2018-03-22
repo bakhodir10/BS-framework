@@ -1,7 +1,23 @@
 #Group 5
 > ###Tania, Bakhodir, Jamsrandorj
 
-> Used Design Patterns: Observer, Account, Party, Simple, Strategy, Singleton, Proxy factory
+
+####How our system works?
+> We have framework, UI for framework, and Controller for framework.
+>  
+> In terms of implementing Framework, we create new Class which is extends from Finco. /BankFinco.java, CreditCardFinco.java/
+> 
+> When we run Bank or Credit card they will call their own Controller. /BankController.java, CreditCardController.java/
+> 
+> And the controller will draw the specific window using Framework's template UI. Call the template UI, add specific buttons, table and so on.
+> 
+> When user click anything, it will call their own listener and let them do their functions.
+> 
+> When user click anything, it will call their own listener and let them do their functions.
+>
+> For example: click Add user, we call popup window from framewrok and add fields into it. It is what controller do.
+>  
+####Used Design Patterns: Observer, Account, Party, Simple, Strategy, Singleton, Proxy factory
 
 ####Observer Pattern
 > We used this pattern to implement addInterest Function. All accounts are observers when user clicks addInterest button it will invoke.
