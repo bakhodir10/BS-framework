@@ -7,7 +7,7 @@ public class BronzeCreditCard extends CreditCardAccount {
     public static double mp = 0.14;
 
     public BronzeCreditCard(String accNum, ICustomer customer, String ccNumber, String expireDate) {
-        super(accNum, customer, ccNumber, expireDate);
+        super(ccNumber, customer, ccNumber, expireDate);
         // TODO Auto-generated constructor stub
     }
 

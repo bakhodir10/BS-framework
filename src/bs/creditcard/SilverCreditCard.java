@@ -7,7 +7,7 @@ public class SilverCreditCard extends CreditCardAccount {
     public static double mp = 0.12;
 
     public SilverCreditCard(String accNum, ICustomer customer, String ccNumber, String expireDate) {
-        super(accNum, customer, ccNumber, expireDate);
+        super(ccNumber, customer, ccNumber, expireDate);
         // TODO Auto-generated constructor stub
     }
 

@@ -11,7 +11,7 @@ public class CreditCardAccount extends Account {
     private String expireDate;
 
     public CreditCardAccount(String accNum, ICustomer customer, String ccNumber, String expireDate) {
-        super(accNum, customer);
+        super(ccNumber, customer);
         this.ccNumber = ccNumber;
         this.expireDate = expireDate;
     }
@@ -30,7 +30,7 @@ public class CreditCardAccount extends Account {
         List<ILogging> histories = History.getInstance().getHistories();
 
         for (ILogging logging : histories) {
-            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() < lastMonth) {
+            if (logging.getAccount().getAccNum().equals(this.getCcNumber()) && logging.getDate().getTime() < lastMonth) {
                 if (logging.getType() == TransferType.DEPOSIT) lastMonthBalance += logging.getAmount();
                 else lastMonthBalance -= logging.getAmount();
             }
@@ -44,7 +44,7 @@ public class CreditCardAccount extends Account {
         List<ILogging> histories = History.getInstance().getHistories();
 
         for (ILogging logging : histories) {
-            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() > lastMonth) {
+            if (logging.getAccount().getAccNum().equals(this.getCcNumber()) && logging.getDate().getTime() > lastMonth) {
                 if (logging.getType() == TransferType.DEPOSIT) totalMonthlyCredits += logging.getAmount();
             }
         }
@@ -57,7 +57,7 @@ public class CreditCardAccount extends Account {
         List<ILogging> histories = History.getInstance().getHistories();
 
         for (ILogging logging : histories) {
-            if (logging.getAccount().getAccNum().equals(this.getAccNum()) && logging.getDate().getTime() > lastMonth) {
+            if (logging.getAccount().getAccNum().equals(this.getCcNumber()) && logging.getDate().getTime() > lastMonth) {
                 if (logging.getType() == TransferType.WITHDRAW) totalMonthlyCharges += logging.getAmount();
             }
         }
@@ -67,7 +67,7 @@ public class CreditCardAccount extends Account {
     public String report() {
         return "Monthly report\n" + "Previous balance: " + getLastMonthBalance() + " \n" +
                 "Total charges: " + getTotalMonthlyCharges() + " \n" +
-                "Total credits: " + getTotalMonthlyCharges() + " \n" +
+                "Total credits: " + getTotalMonthlyCredits() + " \n" +
                 "New balance: " + getNewMonthlyBalance() + " \n" +
                 "Total due: " + getNewMonthlyAmountDue() + " \n";
     }
